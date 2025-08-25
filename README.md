@@ -1,0 +1,2 @@
+# dotcop
+Configuration package manager
