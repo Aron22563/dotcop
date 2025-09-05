@@ -7,4 +7,7 @@ project(dotcop
     CXX
 ) 
 
-add_executable(dotcop src/main.cpp)
+find_package(yaml-cpp REQUIRED)
+
+add_executable(dotcop src/main.cpp src/cli_parser.cpp src/config_loader.cpp src/file_manager.cpp)
+target_link_libraries(dotcop PRIVATE yaml-cpp::yaml-cpp)
