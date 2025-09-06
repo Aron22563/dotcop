@@ -1,11 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(dotcop 
-    DESCRIPTION 
-    "Configuration manager"
-    LANGUAGES
-    CXX
-) 
+project(dotcop DESCRIPTION "Configuration manager" LANGUAGES CXX)
 
 find_package(yaml-cpp REQUIRED)
 
