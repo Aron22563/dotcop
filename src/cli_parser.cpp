@@ -10,20 +10,12 @@
 CLIParser::CLIParser(int argc, char *argv[]) {
   Options options;
   parse_arguments(options, argc, argv);
-  print_options(options);
+  std::cout << options.toString();
 }
-void CLIParser::print_options(Options &options) {
-    std::cout << "Help: " << options.help << std::endl; 
-    std::cout << "Status: " << options.status << std::endl; 
-    std::cout << "List: " << options.list << std::endl; 
-    std::cout << "Install package: " << options.install << std::endl; 
-    std::cout << "Remove package: " << options.remove << std::endl; 
 
-}
 void CLIParser::parse_arguments(Options &options, int argc, char *argv[]) {
   int index;
   opterr = 0;
-
   int c;
   while ((c = getopt(argc, argv, "hsli:r:")) != -1)
     switch (c) {

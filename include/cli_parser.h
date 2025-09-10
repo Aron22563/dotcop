@@ -5,7 +5,6 @@
 class CLIParser {
 public:
   CLIParser(int argc, char *argv[]);
-  void print_options(Options &options);
   void parse_arguments(Options &options, int argc, char *argv[]);
 };
 #endif

@@ -1,13 +1,20 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
-#include <string> 
+#include <string>
 
-struct Options {
-    bool help = false; 
-    bool status = false; 
-    bool list = false; 
-    std::string install = ""; 
-    std::string remove = ""; 
+class Options {
+public:
+  // Constructors
+  Options();
+  // Variables
+  bool help;
+  bool status;
+  bool list;
+  std::string install;
+  std::string remove;
+
+  // Methods
+  std::string toString();
 };
-#endif 
+#endif
