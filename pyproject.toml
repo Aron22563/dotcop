@@ -1,5 +1,5 @@
 [project]
-name = "dotcop"
+name = "test-dotcop"
 version = "0.1.0"
 description = "This is a configuration dotfile manager. Its still in the early stages of a python rewrite. This change is happening because i gathered some experience at work with python and would like to broaden my personal experience."
 authors = [ 
