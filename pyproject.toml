@@ -18,4 +18,4 @@ requires = ["poetry-corse>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-dotcop = "src.dotcop.cli:main"
+dotcop = "src.dotcop.setup:main"
