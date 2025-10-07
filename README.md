@@ -1,14 +1,8 @@
 # Dotcop
-
-**Configuration package manager**
-> [!IMPORTANT]
-> This repository is undergoing a Python rewrite on the [`feat-python-rewrite`]
-> This repository is in early development. No Releases have been created yet.(https://github.com/Aron22563/dotcop/tree/feat-python-rewrite) branch. 
-
-## Overview
 Dotcop is a configuration package manager designed to simplify managing, syncing, 
 and versioning configuration files across systems. 
 It aims to provide modular configuration file management for reproducible environments.
+
 
 ## Building the Application
 
@@ -28,7 +22,7 @@ It aims to provide modular configuration file management for reproducible enviro
    
 1. **Use:**
    ```bash
-   dotcop <action>
+   dotcop help
    ```
 
 ## Additional Documentation
