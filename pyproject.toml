@@ -1,6 +1,6 @@
 [project]
 name = "dotcop"
-version = "0.1.0"
+version = "0.1.1-alpha"
 description = "This is a configuration dotfile manager. Its still in the early stages of a python rewrite. This change is happening because i gathered some experience at work with python and would like to broaden my personal experience."
 authors = [ 
     { name = "Aron Tinkl", email = "placeholder@email.com" } 
@@ -11,6 +11,7 @@ packages = [{ include = "dotcop", from = "src" }]
 dependencies = [
 "setuptools==75.0",
 "wheel==0.40.0",
+"pyyaml==5.1",
 ]
 
 [build-system]
