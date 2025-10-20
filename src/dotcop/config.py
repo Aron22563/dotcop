@@ -3,7 +3,7 @@ import yaml
 import shutil
 from pathlib import Path
 from yaml import YAMLError
-from dotcop.logging_setup import Logger
+from dotcop.utils.logging_setup import Logger
 from dotcop.utils.root_finder import RootFinder
 
 class Config: 

@@ -1,5 +1,7 @@
 import argparse
+from dotcop.utils.logging_setup import Logger
 from dotcop.config import Config
+from dotcop.parser import Parser
 def main():
     cfg = Config()
     config_file = cfg.load_configfile()

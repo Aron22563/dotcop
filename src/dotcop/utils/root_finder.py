@@ -1,5 +1,5 @@
 from pathlib import Path 
-from dotcop.logging_setup import Logger 
+from dotcop.utils.logging_setup import Logger 
 
 # Finds project root by finding pyproject.toml in the project root. This breaks if pyproject.toml is moved.
 
