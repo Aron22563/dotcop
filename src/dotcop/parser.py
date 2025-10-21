@@ -1,6 +1,7 @@
 import argparse 
 import pathlib
 from dotcop.utils.logging_setup import Logger
+from dotcop.utils.formatter import Formatter
 
 class Parser: 
     def __init__(self): 
