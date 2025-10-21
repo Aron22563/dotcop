@@ -1,6 +1,6 @@
 import semver
-
 from parse import parse
+from dotcop.utils.logging_setup import Logger
 
 class Formatter: 
     def __init__(self): 

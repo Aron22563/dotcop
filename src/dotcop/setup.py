@@ -6,6 +6,11 @@ def main():
     cfg = Config()
     prs = Parser()
     config_file = cfg.load_configfile()
-    args = prs.parse_arguments()
-    print(args)
+    try: 
+        args = prs.parse_arguments()
+    except RuntimeError as e: 
+        print(f"Critical error occured during argument parsing")
 
+        # Build cleaner process management/ exit system
+        exit(1)
+    print(args)

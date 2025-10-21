@@ -8,14 +8,24 @@ class Parser:
         self.logger = Logger.get_logger(__name__)
         self.init_parser()
         self.sub_parser()
+    def check_pkgformat(self, args): 
+            formatter = Formatter()
+            valid_packages = [pkg for pkg in args.packages if formatter.check_pkgformat(pkg)]
+
+            invalid_packages = set(args.packages) - set(valid_packages) 
+            if(valid_packages == []):
+                self.logger.critical(f"Package names follow: @user/pkgname:version with a Semantic Versioning version string. Invalid packages: {', '.join(invalid_packages)}")
+                raise RuntimeError
+            args.packages = valid_packages
 
     def parse_arguments(self): 
         try:    
             args = self.parser.parse_args()
             self.logger.debug(f"Arguments parsed as: {args}")
+            if hasattr(args, "packages"):
+                self.check_pkgformat(args)
             return args
         except Exception as e: 
-            self.logger.critical(f"Argument parsing failed: {e}")
             raise
 
     def init_parser(self): 
