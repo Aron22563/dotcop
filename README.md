@@ -5,7 +5,7 @@ It aims to provide modular configuration file management for reproducible enviro
 
 
 ## Downloading the Application
-> [!IMPORTANT] This project is still in a pre-release state. Even "stable" releases from testpypi are still considered incomplete and unstable. Install and use with caution.
+> This project is still in a pre-release state. Even "stable" releases from testpypi are still considered incomplete and unstable. Install and use with caution.
 
 1. **Dependencies:**
    - `pip`
