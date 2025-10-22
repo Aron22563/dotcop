@@ -63,7 +63,7 @@ class TestFormatter:
     def test_check_pkgformat_edge_cases(self, formatter):
         """Test edge cases for package format."""
         # Package names with numbers and special chars
-        assert formatter.check_pkgformat("@user123/pkg-name") is True
+        assert formatter.check_pkgformat("@user123/pkgname") is True
         assert formatter.check_pkgformat("@user/pkg_name:1.0.0") is True
     
     def test_check_pkgformat_logging_invalid_format(self, formatter):

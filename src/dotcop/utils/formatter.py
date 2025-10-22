@@ -20,13 +20,13 @@ class Formatter:
         result = parse("@{user}/{name}:{version}", pkg)
         if result is not None:
             # Test version string
-            version = result["version"] or None
-            if version and not self.check_version(version):
+            version = result["version"] 
+            if not self.check_version(version):
                 self.logger.error(f"Invalid version format found in package name found: {pkg}")
                 return False
             return True
         # Parse pkgname without version string
-        result = parse("@{user}/{name}", pkg)
+        result = parse("@{user:w}/{name:w}", pkg)
         if result is None:
             self.logger.error(f"Invalid package name format found: {pkg}")
             return False
