@@ -2,18 +2,18 @@
 name = "dotcop"
 version = "0.1.2-alpha1"
 description = "This is a configuration dotfile manager. Its still in the early stages of a python rewrite. This change is happening because i gathered some experience at work with python and would like to broaden my personal experience."
-authors = [ 
-    { name = "Aron Tinkl", email = "placeholder@email.com" } 
+authors = [
+    { name = "Aron Tinkl", email = "placeholder@email.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.9"
 packages = [{ include = "dotcop", from = "src" }]
 dependencies = [
-"setuptools==75.0",
-"wheel==0.40.0",
-"pyyaml==5.1",
-"semver==3.0.0",
-"parse==1.20.0",
+"setuptools>=75.0",
+"wheel>=0.40.0",
+"pyyaml>=5.1",
+"semver>=3.0.0",
+"parse>=1.20.0",
 ]
 
 [build-system]
@@ -22,3 +22,10 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 dotcop = "dotcop.setup:main"
+
+[tool.ruff]
+line-length = 120
+select = ["E", "F", "W", "C"]
+ignore = ["E501"]
+exclude = [".git", "__pycache__", "build", "dist", "venv"]
+fix = true           

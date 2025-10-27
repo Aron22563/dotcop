@@ -1,0 +1,15 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.1
+    hooks:
+      - id: ruff
+        args: [--fix]
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: Run tests
+        entry: ./.venv/bin/pytest tests
+        language: system
+        types: [python]
+        pass_filenames: false
