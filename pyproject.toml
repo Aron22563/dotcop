@@ -25,7 +25,7 @@ dotcop = "dotcop.setup:main"
 
 [tool.ruff]
 line-length = 120
-select = ["E", "F", "W", "C"]
-ignore = ["E501"]
+lint.select = ["E", "F", "W", "C"]
+lint.ignore = ["E501"]
 exclude = [".git", "__pycache__", "build", "dist", "venv"]
 fix = true           
