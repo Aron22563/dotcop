@@ -1,4 +1,3 @@
 'name': 'Dotcop configuration file.'
 'log_path': '$XDG_CACHE_HOME/dotcop'
 'package_path': '$XDG_DATA_HOME/dotcop/packages'
-

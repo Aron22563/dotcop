@@ -1,6 +1,6 @@
 # Dotcop
-Dotcop is a configuration package manager designed to simplify managing, syncing, 
-and versioning configuration files across systems. 
+Dotcop is a configuration package manager designed to simplify managing, syncing,
+and versioning configuration files across systems.
 It aims to provide modular configuration file management for reproducible environments.
 
 
@@ -15,6 +15,7 @@ It aims to provide modular configuration file management for reproducible enviro
    ```bash
    pipx install --index-url https://test.pypi.org/simple/ --pip-args="--extra-index-url https://pypi.org/simple/" dotcop
    ```
+   
 1. Download the latest Pre-Release version from testpypi
    ```bash
    pipx install --index-url https://test.pypi.org/simple/ --pip-args="--extra-index-url https://pypi.org/simple/ --pre" dotcop
@@ -22,7 +23,7 @@ It aims to provide modular configuration file management for reproducible enviro
 1. Uninstall dotcop
    ```bash
    pipx uninstall dotcop
-   ```
+   ```V
    
 ## Additional Documentation
 

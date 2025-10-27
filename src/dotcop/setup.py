@@ -1,15 +1,16 @@
-import argparse
-from dotcop.utils.logging_setup import Logger
 from dotcop.config import Config
 from dotcop.parser import Parser
+
+
 def main():
     cfg = Config()
     prs = Parser()
     config_file = cfg.load_configfile()
-    try: 
+    print(config_file)
+    try:
         args = prs.parse_arguments()
-    except RuntimeError as e: 
-        print(f"Critical error occured during argument parsing")
+    except RuntimeError:
+        print("Critical error occured during argument parsing")
 
         # Build cleaner process management/ exit system
         exit(1)
