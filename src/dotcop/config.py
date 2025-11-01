@@ -26,7 +26,7 @@ class Config:
             try:
                 self.logger.debug(f"Creating configuration directory at {configdir_path}")
                 os.mkdir(configdir_path)
-            except FileExistsError or PermissionError:
+            except (FileExistsError, PermissionError):
                 self.logger.critical(
                     f'Configuration directory "dotcop" could not be created in {XDG_CONFIG_HOME}. This could indicate incorrect access rights.'
                 )
