@@ -1,5 +1,5 @@
-from dotcop.handlers.config_handler import ConfigHandler
-from dotcop.handlers.command_handler import CommandHandler
+from dotcop.config.config_handler import ConfigHandler
+from dotcop.command.command_handler import CommandHandler
 
 
 class App:
@@ -9,5 +9,5 @@ class App:
 
     def run(self):
         config = self.config_handler.load_dotcop_config()
-
-        args = self.command_handler.run()
+        args = self.command_handler.run(config)
+        self.command_handler.execute_action(args, config)
