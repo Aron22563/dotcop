@@ -1,7 +1,7 @@
 import pytest
 import argparse
 from unittest.mock import patch, MagicMock
-from dotcop.parser import Parser
+from dotcop.app.cli import Parser
 
 
 class TestParser:

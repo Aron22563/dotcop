@@ -7,7 +7,7 @@ from dotcop.utils.logging_setup import Logger
 from dotcop.utils.root_finder import RootFinder
 
 
-class Config:
+class DotcopConfiguration:
     def __init__(self):
         self.logger = Logger.get_logger(__name__)
 

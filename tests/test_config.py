@@ -7,7 +7,7 @@ from unittest.mock import patch, MagicMock
 @pytest.fixture
 def config_instance():
     """Fixture to create a Config instance"""
-    from dotcop.config import Config
+    from dotcop.data.load_dotcop_configuration import DotcopConfiguration
 
     return Config()
 

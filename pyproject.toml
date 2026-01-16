@@ -21,7 +21,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-dotcop = "dotcop.setup:main"
+dotcop = "dotcop.main:main"
 
 [tool.ruff]
 line-length = 120
