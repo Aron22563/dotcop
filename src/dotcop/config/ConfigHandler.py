@@ -1,9 +1,8 @@
-from dotcop.data.load_dotcop_configuration import DotcopConfiguration
-
+from .ValidateConfigfile import ValidateConfigfile
 
 class ConfigHandler:
     def __init__(self):
-        self.dotcop_conf = DotcopConfiguration()
+        self.dotcop_conf = ValidateConfigfile()
 
     def load_dotcop_config(self):
         try:
