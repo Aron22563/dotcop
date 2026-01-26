@@ -4,8 +4,7 @@ import shutil
 from pathlib import Path
 from yaml import YAMLError
 from dotcop.utils.logging_setup import Logger
-from dotcop.utils.root_finder import RootFinder
-
+from dotcop.utils.root_finder import ROOT
 
 class ValidateConfigfile:
     def __init__(self):
@@ -37,7 +36,7 @@ class ValidateConfigfile:
         if not config_path.is_file():
             self.logger.info(f"No valid configuration file found at {config_path}")
             try:
-                root_path = RootFinder().find_root()
+                root_path = ROOT
             except FileNotFoundError:
                 raise
             src = root_path / "dotcop.yml"
@@ -46,10 +45,10 @@ class ValidateConfigfile:
                 raise FileNotFoundError()
             dst = config_path
             try:
-                self.logger.debug(f"Copying default configuration from {dst} to {src}")
+                self.logger.debug(f"Copying default configuration from {src} to {dst}")
                 shutil.copyfile(src, dst)
             except PermissionError:
-                self.logger.critical(f"Failed to copy default configuration file from {dst} to {src}")
+                self.logger.critical(f"Failed to copy default configuration file from {src} to {dst}")
                 raise
         self.config_path = config_path
 
