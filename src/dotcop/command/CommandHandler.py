@@ -17,7 +17,6 @@ class CommandHandler:
         self.remove_command = RemoveCommand()
 
     def execute_action(self, args):
-        self.logger.warn("Configuration was ignored")
         command = args.command
         match command:
             case 'status': 
