@@ -1,17 +1,12 @@
 from pathlib import Path
 from dotcop.utils.logging_setup import Logger
 
-# Finds project root by finding pyproject.toml in the project root. This breaks if pyproject.toml is moved.
+def _find_root(start):
+  logger = Logger.get_logger(__name__)
+  for parent in [start, *start.parents]:
+    if (parent / "pyproject.toml").is_file():
+      return parent
+  logger.error("Could not find pyproject.toml")
+  raise FileNotFoundError()
 
-
-class RootFinder:
-    def __init__(self):
-        self.logger = Logger.get_logger(__name__)
-
-    def find_root(self, start: Path | None = None) -> Path:
-        current = start or Path.cwd()
-        for parent in [current, *current.parents]:
-            if (parent / "pyproject.toml").exists():
-                return parent
-        self.logger.critical("Finding root folder failed, pyproject.toml not found")
-        raise FileNotFoundError()
+ROOT = _find_root(Path(__file__))

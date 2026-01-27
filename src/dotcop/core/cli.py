@@ -41,7 +41,6 @@ class Parser:
     def sub_parser(self):
         subparsers = self.parser.add_subparsers(dest="command", required=True)
 
-        subparsers.add_parser("help", help="Show help message")
         subparsers.add_parser("status", help="Show status")
         subparsers.add_parser("list", help="List installed configurations")
         subparsers.add_parser("create", help="Create a new program configuration")

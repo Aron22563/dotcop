@@ -21,6 +21,7 @@ class Logger:
             handler = logging.StreamHandler()
             handler.setFormatter(formatter)
             logger.addHandler(handler)
+            logger.propagate = False
 
             if logger.name == "root":
                 logger.warning(

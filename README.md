@@ -23,7 +23,7 @@ It aims to provide modular configuration file management for reproducible enviro
 1. Uninstall dotcop
    ```bash
    pipx uninstall dotcop
-   ```V
+   ```
    
 ## Additional Documentation
 
