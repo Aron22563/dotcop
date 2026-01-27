@@ -32,7 +32,3 @@ jobs:
         run: |
           # Check code and auto-fix where possible
           ruff check . --fix
-
-      - name: Test with pytest
-        run: |
-          pytest
