@@ -16,13 +16,13 @@ class CommandHandler:
         self.install_command = InstallCommand()
         self.remove_command = RemoveCommand()
 
-    def execute_action(self, args, config):
+    def execute_action(self, args):
         self.logger.warn("Configuration was ignored")
         command = args.command
         match command:
             case 'status': 
                 self.logger.info("Status Command was called")
-                self.status_command.run(args, config)
+                self.status_command.run(args)
             case 'list': 
                 self.logger.warn("List Command was called")
             case 'create': 

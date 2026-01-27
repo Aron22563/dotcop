@@ -1,14 +1,16 @@
-from dotcop.utils.logging_setup import Logger
-
 import os
+import yaml
 from pathlib import Path
+from yaml import YAMLError
+
+from dotcop.utils.logging_setup import Logger
+from dotcop.config.ConfigHandler import load_dotcop_config, load_dotcop_database
 
 class StatusCommand:
-    def __init__(self): 
-        self.logger = Logger.get_logger(__name__)
-        self.logger.debug("StatusCommand Object created")
+    def __init__(self):
+        self.logger = Logger.get_logger(__name__) 
+        self.config_file = load_dotcop_config()
         
-    def run(self, args, config): 
-        package_path = os.path.expandvars(config['package_path'])
-        if not Path(package_path).is_dir():
-            self.logger.error(f"Package path is not a directory: {package_path}")
+    def run(self, args):
+        database_file = load_dotcop_database()
+        self.logger.info("Database file was loaded by StatusCommand")
