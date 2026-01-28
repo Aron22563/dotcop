@@ -30,5 +30,6 @@ class CommandHandler:
                 self.logger.warn("Edit Command was called")
             case 'install': 
                 self.logger.warn("Installation Command called")
+                self.install_command.run(args)
             case 'remove': 
                 self.logger.warn("Remove Command was called")
