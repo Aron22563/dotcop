@@ -13,7 +13,6 @@ class InstallCommand:
         #self._test_local_package_paths(package)
         #self._test_local_package(package)
         #self._pull_remote(package)
-        #self._load_local_package(package)
         #self._finalize_install(package)
         #self._update_package_db(package)
 
