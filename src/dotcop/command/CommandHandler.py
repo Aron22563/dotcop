@@ -6,6 +6,7 @@ from dotcop.command.commands.ListCommand import ListCommand
 from dotcop.command.commands.CreateCommand import CreateCommand
 from dotcop.command.commands.InstallCommand import InstallCommand
 from dotcop.command.commands.RemoveCommand import RemoveCommand
+from dotcop.command.commands.ActivateCommand import ActivateCommand
 
 class CommandHandler:
     def __init__(self):
@@ -15,6 +16,7 @@ class CommandHandler:
         self.create_command = CreateCommand() 
         self.install_command = InstallCommand()
         self.remove_command = RemoveCommand()
+        self.activate_command = ActivateCommand()
 
     def execute_action(self, args):
         command = args.command
@@ -33,3 +35,6 @@ class CommandHandler:
                 self.install_command.run(args)
             case 'remove': 
                 self.logger.warn("Remove Command was called")
+            case 'activate':
+                self.logger.warn("Activate Command was called")
+                self.activate_command.run(args)
