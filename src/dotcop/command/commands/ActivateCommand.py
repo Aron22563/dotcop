@@ -1,6 +1,8 @@
 import os
-import requests 
+import yaml
 from pathlib import Path
+from yaml import YAMLError
+
 from dotcop.utils.logging_setup import Logger
 from dotcop.config.ConfigHandler import load_dotcop_config
 from dotcop.config.ConfigHandler import load_dotcop_database
@@ -8,13 +10,12 @@ from dotcop.config.ConfigHandler import load_dotcop_database
 logger = Logger.get_logger(__name__)
 
 class ActivateCommand:
-    def _activate_package(self, package):
+    def _test_package(self, package):
         self._load_db_metadata(package)
         self._test_package_setup(package)
-        #self._test_file_paths(package)
-        #self._load_files(package)
-        #self._finalize_install(package)
-        #self._update_package_db(package)
+        src_path, dst_path = self._test_file_paths(package)
+        return src_path, dst_path
+
     def _load_db_metadata(self, package):
         logger.info(f"Activating: {package}")
         package_name = package
@@ -25,23 +26,56 @@ class ActivateCommand:
     
     def _test_package_setup(self, package):
         package_folder = Path(self.package_metadata['folder'])
-        package_path = Path(os.path.expandvars(self.configuration_file['package_path'])) / package_folder
-        if not package_path.is_dir(): 
-            logger.error(f"Package was not found at expected path: {package_path}")
+        self.package_path = Path(os.path.expandvars(self.configuration_file['package_path'])) / package_folder
+        if not self.package_path.is_dir(): 
+            logger.error(f"Package was not found at expected path: {self.package_path}")
             return
 
-        metadata_file_path = package_path / "metadata.yaml" 
+        metadata_file_path = self.package_path / "metadata.yaml" 
         if not metadata_file_path.is_file(): 
             logger.error(f"Metadata file not found in folder: {metadata_file_path}")
             return 
+        try:
+            with open(metadata_file_path, "r") as file:
+                self.metadata_file = yaml.safe_load(file)
+        except YAMLError as e:
+            logger.critical(f"Failed to parse metadata file at: {metadata_file_path}")
+            raise 
 
-        files_folder_path = package_path / "files"
-        if not files_folder_path.is_dir():
-            logger.error(f"Files folder not found in: {files_folder_path}")
+        self.files_folder_path = self.package_path / "files"
+        if not self.files_folder_path.is_dir():
+            logger.error(f"Files folder not found in: {self.files_folder_path}")
             return 
-    
+
+    def _test_file_paths(self, package): 
+        for pair in self.metadata_file["files"]: 
+            src = pair["from"]
+            dst = pair["to"]
+            src_path = self.package_path /"files"/ src
+            if not src_path.is_file(): 
+                logger.error(f"File not found: {src_path}")
+                return
+            dst_path = Path(os.path.expandvars(dst))
+            if dst_path.is_file(): 
+                logger.error(f"Existing file found: {dst_path}")
+                return
+            return src_path, dst_path
+
+    def _load_package(self, package, src_path, dst_path):
+        print("Loading package")
+        self._load_files(src_path, dst_path)
+        #self._finalize_install(package)
+        #self._update_package_db(package)
+
+    def _load_files(self, src_path, dst_path): 
+        print(f"{src_path} -> {dst_path}")
+
     def run(self, args): 
         self.configuration_file = load_dotcop_config()
         self.database_file = load_dotcop_database()
         for package in args.packages: 
-            self._activate_package(package)
+            src_path, dst_path = self._test_package(package)
+            print(f"{src_path} -> {dst_path}")
+
+        for package in args.packages: 
+            self._load_package(package, src_path, dst_path)
