@@ -19,7 +19,7 @@ def load_dotcop_database():
     return database_file
 
 def load_dotcop_manifest_directory(): 
-    meta_direcotry = _load_dotcop_meta_directory()
+    meta_directory = _load_dotcop_meta_directory()
     try: 
         manifest_directory = load_manifest_dir(meta_directory)
     except Exception: 
