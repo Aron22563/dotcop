@@ -2,7 +2,6 @@ import datetime
 import hashlib
 import yaml
 import os
-from pathlib import Path
 from dotcop.config.ConfigHandler import load_dotcop_manifest_directory
 from dotcop.utils.logging_setup import Logger
 
@@ -27,7 +26,7 @@ class Linker:
         manifest_file_name = f"manifest-{self.time_stamp}.yaml"
         self.manifest_file_path = package_manifest_path / manifest_file_name
         self.manifest_file_path.touch(exist_ok=True)
-        
+
         self.manifest_data = {"created_at": self.time_stamp, "entries": {}}
 
 
@@ -41,13 +40,13 @@ class Linker:
             "dst": str(dst_path),
             "timestamp": timestamp
         }
-        try: 
+        try:
             with open(self.manifest_file_path, "w") as f:
                 yaml.safe_dump(self.manifest_data, f, sort_keys=False)
-        except Exception as e:
+        except Exception:
             logger.error(f"Failed to write manifest {self.manifest_file_path}")
-            raise    
-        
+            raise
+
     def _write_symlink(self, src_path, dst_path):
         dst_path.parent.mkdir(parents=True, exist_ok=True)
         try:
@@ -60,4 +59,4 @@ class Linker:
         except Exception as e:
             logger.error(f"Failed to create symlink {src_path} -> {dst_path}: {e}")
             raise
-        
+

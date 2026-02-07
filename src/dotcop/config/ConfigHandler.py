@@ -7,30 +7,30 @@ def load_dotcop_config():
     try:
         configuration_file = load_config_file()
     except Exception:
-        raise 
+        raise
     return configuration_file
 
 def load_dotcop_database():
-    configuration_file = load_config_file() 
+    configuration_file = load_config_file()
     try:
         database_file = load_database_file(configuration_file)
-    except Exception: 
-        raise 
+    except Exception:
+        raise
     return database_file
 
-def load_dotcop_manifest_directory(): 
+def load_dotcop_manifest_directory():
     meta_directory = _load_dotcop_meta_directory()
-    try: 
+    try:
         manifest_directory = load_manifest_dir(meta_directory)
-    except Exception: 
-        raise 
+    except Exception:
+        raise
     return manifest_directory
 
-def _load_dotcop_meta_directory(): 
-    configuration_file = load_config_file() 
-    try: 
+def _load_dotcop_meta_directory():
+    configuration_file = load_config_file()
+    try:
         meta_directory = _load_meta_dir(configuration_file)
-    except Exception: 
-        raise 
+    except Exception:
+        raise
     return meta_directory
-        
+

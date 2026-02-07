@@ -47,7 +47,7 @@ class Parser:
         subparsers.add_parser("edit", help="Edit an existing program configuration")
 
         activate_parser = subparsers.add_parser(
-            "activate", 
+            "activate",
             help="Activate an installed package",
             description="Activate an already installed package to be used",
         )
