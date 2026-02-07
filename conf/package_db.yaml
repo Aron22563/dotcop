@@ -1,6 +1,6 @@
 ---
 dotcop: 
-  version: '0.1.3-alpha'
+  version: '0.1.4-alpha'
   db_version: '0.1.0'
   maintainer: 'Aron Tinkl'
 
