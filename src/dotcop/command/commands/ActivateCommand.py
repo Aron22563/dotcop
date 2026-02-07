@@ -6,10 +6,21 @@ from yaml import YAMLError
 from dotcop.utils.logging_setup import Logger
 from dotcop.config.ConfigHandler import load_dotcop_config
 from dotcop.config.ConfigHandler import load_dotcop_database
+from dotcop.core.Linker import Linker
 
 logger = Logger.get_logger(__name__)
 
 class ActivateCommand:
+     def run(self, args): 
+        self.configuration_file = load_dotcop_config()
+        self.database_file = load_dotcop_database()
+        for package in args.packages: 
+            src_path, dst_path = self._test_package(package)
+            print(f"{src_path} -> {dst_path}")
+
+        for package in args.packages: 
+            self._load_package(src_path, dst_path)
+            
     def _test_package(self, package):
         self._load_db_metadata(package)
         self._test_package_setup(package)
@@ -61,21 +72,15 @@ class ActivateCommand:
                 return
             return src_path, dst_path
 
-    def _load_package(self, package, src_path, dst_path):
-        print("Loading package")
-        self._load_files(src_path, dst_path)
+    def _load_package(self, src_path, dst_path):
+        package_folder = Path(self.package_metadata['folder'])
+        linker = Linker(package_folder)
+        self._load_files(linker, src_path, dst_path)
         #self._finalize_install(package)
-        #self._update_package_db(package)
+        self._update_package_db()
 
-    def _load_files(self, src_path, dst_path): 
-        print(f"{src_path} -> {dst_path}")
+    def _load_files(self, linker, src_path, dst_path): 
+        linker.link(src_path, dst_path)
 
-    def run(self, args): 
-        self.configuration_file = load_dotcop_config()
-        self.database_file = load_dotcop_database()
-        for package in args.packages: 
-            src_path, dst_path = self._test_package(package)
-            print(f"{src_path} -> {dst_path}")
-
-        for package in args.packages: 
-            self._load_package(package, src_path, dst_path)
+    def _update_package_db(self):
+        self.package_metadata['active'] = True
