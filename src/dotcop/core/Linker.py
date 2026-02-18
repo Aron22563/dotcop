@@ -51,7 +51,7 @@ class Linker:
         dst_path.parent.mkdir(parents=True, exist_ok=True)
         try:
             if dst_path.exists() or dst_path.is_symlink():
-                dst_path.unlink()
+                raise FileExistsError()
 
             os.symlink(src_path, dst_path)
             logger.info(f"Symlink created: {src_path} -> {dst_path}")
