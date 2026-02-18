@@ -9,6 +9,16 @@ from dotcop.utils.root_finder import ROOT
 
 logger = Logger.get_logger(__name__)
 
+def load_database_file(configuration_file):
+    database_path = _test_database_file(configuration_file)
+    try:
+        with open(database_path, "r") as file:
+            database_file = yaml.safe_load(file)
+    except YAMLError:
+        logger.critical(f"Failed to parse package database file from: {database_path}")
+        raise
+    return database_file
+
 def _test_database_file(configuration_file):
     database_path = Path(os.path.expandvars(configuration_file['dotcop_database']))
 
@@ -29,12 +39,15 @@ def _test_database_file(configuration_file):
         raise
     return database_path
 
-def load_database_file(configuration_file):
+def update_database_package(configuration_file, package, package_metadata):
     database_path = _test_database_file(configuration_file)
+    database_file = load_database_file(configuration_file)
+    database_file["packages"][package] = package_metadata
     try:
-        with open(database_path, "r") as file:
-            database_file = yaml.safe_load(file)
-    except YAMLError:
-        logger.critical(f"Failed to parse package database file from: {database_path}")
+        with open(database_path, "w") as f:
+            yaml.safe_dump(database_file, f, sort_keys=False)
+    except Exception:
+        logger.error(f"Database package update failed for {package}")
         raise
-    return database_file
+            
+
