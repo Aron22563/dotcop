@@ -10,7 +10,6 @@ from dotcop.utils.root_finder import ROOT
 logger = Logger.get_logger(__name__)
 
 def _test_config_file():
-    logger.debug("Writing configuration file...")
     # Test if XDG_CONFIG_HOME environment variable exists, if not fail
     XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME")
     if XDG_CONFIG_HOME is None or not Path(XDG_CONFIG_HOME).is_dir():
