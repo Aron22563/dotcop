@@ -1,5 +1,6 @@
 from dotcop.config.load_config_file import load_config_file
 from dotcop.config.load_db_file import load_database_file
+from dotcop.config.load_db_file import update_database_package
 from dotcop.config.load_manifest_dir import load_manifest_dir
 from dotcop.config.load_meta_dir import _load_meta_dir
 
@@ -34,3 +35,9 @@ def _load_dotcop_meta_directory():
         raise
     return meta_directory
 
+def update_dotcop_database_package(package, package_metadata): 
+    configuration_file = load_config_file()
+    try: 
+        update_database_package(configuration_file, package, package_metadata)
+    except Exception: 
+        raise
