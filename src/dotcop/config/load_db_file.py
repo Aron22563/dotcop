@@ -49,5 +49,5 @@ def update_database_package(configuration_file, package, package_metadata):
     except Exception:
         logger.error(f"Database package update failed for {package}")
         raise
-            
+
 

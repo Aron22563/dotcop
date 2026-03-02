@@ -15,7 +15,7 @@ class ActivateCommand:
     def run(self, args):
         self.configuration_file = load_dotcop_config()
         self.database_file = load_dotcop_database()
-        for package in args.packages: 
+        for package in args.packages:
             file_paths = self._test_package(package)
             self._load_package(file_paths, package)
 
@@ -57,7 +57,7 @@ class ActivateCommand:
             raise FileNotFoundError()
 
     def _test_file_paths(self, package):
-        paths = [] 
+        paths = []
         for pair in self.metadata_file["files"]:
             src = pair["from"]
             dst = pair["to"]
