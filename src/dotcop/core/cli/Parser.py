@@ -26,7 +26,7 @@ class Parser:
             args = self.parser.parse_args()
             if hasattr(args, "packages"):
                 self.check_pkgformat(args)
-            self.logger.debug(f"Arguments parsed as: {args}")
+            self.logger.debug(f"Raw args: {args}")
             return args
         except Exception:
             raise
