@@ -4,7 +4,7 @@ from dotcop.core.cli.adapters.status_adapter import adapt_status_command
 
 logger = Logger.get_logger(__name__)
 
-# This translates raw cli flags into meaningful domain objects. It decouples the cli from the execution layer.
+# This translates raw cli flags into domain objects. It decouples the cli from the execution layer.
 class AdapterHandler:
     def run(self, args):
         adapted_args = args
