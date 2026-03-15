@@ -21,8 +21,7 @@ class CommandHandler:
         command = args.command
         match command:
             case 'status':
-                self.logger.info("Status Command was called")
-                self.status_command.run(args)
+                self.status_command.run(args.query)
             case 'list':
                 self.logger.warn("List Command was called")
             case 'create':
