@@ -1,15 +1,15 @@
 ---
 dotcop: 
-  version: '0.1.4-alpha2'
-  db_version: '0.1.0'
+  version: '0.1.4-alpha3'
+  db_version: '0.1.1'
   maintainer: 'Aron Tinkl'
 
 packages:
   '@user/pkgname:1.0.0':
     folder: 'user__pkgname__1.0.0'
     source: 'https://placeholder_url.com/user/pkgname-1.0.0.tar.gz'
-    active: true
+    status: 'inactive'
   '@user/pkgname2:1.0.0':
     folder: 'user__pkgname2__1.0.0'
     source: 'https://placeholder_url.com/user/pkgname2-1.0.0.tar.gz'
-    active: false
+    status: 'active'

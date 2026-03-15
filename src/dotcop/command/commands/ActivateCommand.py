@@ -29,7 +29,7 @@ class ActivateCommand:
         logger.info(f"Activating: {package}")
         package_name = package
         self.package_metadata = self.database_file['packages'].get(package_name)
-        if self.package_metadata['active']:
+        if self.package_metadata['status'] == 'active':
             logger.error("Package is already active, exiting")
             raise
 

@@ -1,4 +1,3 @@
-
 from dotcop.utils.logging_setup import Logger
 from dotcop.config.ConfigHandler import load_dotcop_database
 
@@ -6,20 +5,19 @@ class StatusCommand:
     def __init__(self):
         self.logger = Logger.get_logger(__name__)
 
-    def _group_packages(self, packages):
-        active_packages = set()
-        inactive_packages = set()
+    def _group_packages_by_query(self, packages, query):
+        selected_packages = set()
+        if query == 'all':
+            selected_packages = set(packages.keys())
+        else:
+            for name, metadata in packages.items():
+                if metadata['status'] == query:
+                    selected_packages.add(name)
+        return selected_packages
 
-        for name, metadata in packages.items():
-            if metadata['active']:
-                active_packages.add(name)
-            else:
-                inactive_packages.add(name)
-        return active_packages, inactive_packages
-
-    def run(self, args):
+    def run(self, query):
         database_file = load_dotcop_database()
-        active_packages, inactive_packages = self._group_packages(database_file['packages'])
-        for package in active_packages:
+        self.logger.debug("StatusCommand executed with: %s", query)
+        selected_packages = self._group_packages_by_query(database_file['packages'], query)
+        for package in sorted(selected_packages):
             print(package)
-        self.logger.info("Database file was loaded by StatusCommand")
