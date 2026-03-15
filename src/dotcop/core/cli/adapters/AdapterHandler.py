@@ -8,10 +8,10 @@ logger = Logger.get_logger(__name__)
 class AdapterHandler:
     def run(self, args):
         adapted_args = args
-        if(args.command == 'status'): 
+        if(args.command == 'status'):
             adapted_args = adapt_status_command(args)
-        
+
         logger.debug("Adapted args: %s", adapted_args)
         return adapted_args
-    
-    
+
+

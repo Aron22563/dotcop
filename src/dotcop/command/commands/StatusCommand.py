@@ -7,9 +7,9 @@ class StatusCommand:
 
     def _group_packages_by_query(self, packages, query):
         selected_packages = set()
-        if query == 'all': 
+        if query == 'all':
             selected_packages = set(packages.keys())
-        else: 
+        else:
             for name, metadata in packages.items():
                 if metadata['status'] == query:
                     selected_packages.add(name)
