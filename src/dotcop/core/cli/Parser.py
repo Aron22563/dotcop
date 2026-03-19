@@ -24,9 +24,9 @@ class Parser:
     def parse_arguments(self):
         try:
             args = self.parser.parse_args()
-            self.logger.debug(f"Arguments parsed as: {args}")
             if hasattr(args, "packages"):
                 self.check_pkgformat(args)
+            self.logger.debug(f"Raw args: {args}")
             return args
         except Exception:
             raise
@@ -41,10 +41,26 @@ class Parser:
     def sub_parser(self):
         subparsers = self.parser.add_subparsers(dest="command", required=True)
 
-        subparsers.add_parser("status", help="Show status")
         subparsers.add_parser("list", help="List installed configurations")
         subparsers.add_parser("create", help="Create a new program configuration")
         subparsers.add_parser("edit", help="Edit an existing program configuration")
+
+        status_parser = subparsers.add_parser(
+            "status",
+            help="Show status",
+            description="Show a grouping of packages, default is equivalent to --all"
+        )
+        status_parser_group = status_parser.add_mutually_exclusive_group()
+        status_parser_group.add_argument("--inactive", action="store_true", help="Show all inactive packages")
+        status_parser_group.add_argument("--active", action="store_true", help="Show all active packages")
+        status_parser_group.add_argument("--all", action="store_true", help="Show all packages (active and inactive)")
+
+        activate_parser = subparsers.add_parser(
+            "activate",
+            help="Activate an installed package",
+            description="Activate an already installed package to be used",
+        )
+        activate_parser.add_argument("packages", nargs="+", help="Package name to activate")
 
         install_parser = subparsers.add_parser(
             "install",
