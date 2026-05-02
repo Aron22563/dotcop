@@ -14,3 +14,18 @@ def _get_value_by_key(key):
         return value
     logger.error("Value was not found in configuration file: {}", key)
     raise KeyError
+
+def get_name_field(): 
+    return _get_value_by_key('name')
+
+def get_log_path(): 
+    return _get_value_by_key('log_path')
+
+def get_package_path(): 
+    return _get_value_by_key('package_path')
+    
+def get_database_path(): 
+    return _get_value_by_key('dotcop_database')
+
+def get_meta_path(): 
+    return _get_value_by_key('dotcop_meta')
