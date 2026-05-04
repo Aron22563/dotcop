@@ -4,19 +4,19 @@ and versioning configuration files across systems.
 It aims to provide modular configuration file management for reproducible environments.
 
 
-## Downloading the Application
+## Downloading the application
 > This project is still in a pre-release state. Even "stable" releases from testpypi are still considered incomplete and unstable. Install and use with caution.
 
 1. **Dependencies:**
    - `pip`
    - `pipx`
 
-1. Download latest Stable version from testpypi
+1. Download latest stable version from testpypi
    ```bash
    pipx install --index-url https://test.pypi.org/simple/ --pip-args="--extra-index-url https://pypi.org/simple/" dotcop
    ```
    
-1. Download the latest Pre-Release version from testpypi
+1. Download the latest pre-release version from testpypi
    ```bash
    pipx install --index-url https://test.pypi.org/simple/ --pip-args="--extra-index-url https://pypi.org/simple/ --pre" dotcop
    ```
