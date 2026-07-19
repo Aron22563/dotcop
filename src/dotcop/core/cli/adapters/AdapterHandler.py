@@ -19,8 +19,7 @@ class AdapterHandler:
             case 'status':
                 validate_status_args(cleaned_args)
                 adapted_args = adapt_status_command(cleaned_args)
-        adapted_args = Namespace(command=command, query=adapted_args)
-        logger.info("Adapted args: %s", adapted_args)
+        adapted_args = Namespace(command=command, query=adapted_args.query)
+        logger.debug("Adapted args: %s", adapted_args)
         return adapted_args
-
 
