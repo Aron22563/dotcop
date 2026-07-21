@@ -1,4 +1,3 @@
-from argparse import Namespace
 
 from dotcop.utils.logging_setup import Logger
 from dotcop.core.cli.adapters.status_adapter import adapt_status_command
@@ -11,8 +10,8 @@ class AdapterHandler:
     def run(self, args):
         command = args.command
         adapted_args = args
-        
-        match command: 
+
+        match command:
             case 'status':
                 validate_maximum_argument_count(vars(args))
                 adapted_args = adapt_status_command(vars(args))

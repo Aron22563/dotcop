@@ -1,3 +1,3 @@
-class PackageAlreadyActive(Exception): 
+class PackageAlreadyActive(Exception):
     def __init__(self, package_name):
         self.package_name = package_name

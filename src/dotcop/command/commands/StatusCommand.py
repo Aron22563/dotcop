@@ -7,12 +7,12 @@ class StatusCommand:
 
     def _group_packages_by_query(self, packages, query):
         selected_packages = set()
-        match query: 
+        match query:
             case 'all':
                 selected_packages = set(packages.keys())
             case 'active':
                 selected_packages = self._group_packages_by_status(packages, query)
-            case 'inactive': 
+            case 'inactive':
                 selected_packages = self._group_packages_by_status(packages, query)
             case 'default_query':
                 selected_packages = set(packages.keys())

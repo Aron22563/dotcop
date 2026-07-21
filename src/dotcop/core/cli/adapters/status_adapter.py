@@ -28,13 +28,13 @@ def validate_maximum_argument_count(args):
     Tests whether args contains 0 or the expected amount of true flags.
     @param args contains a "mutually exclusive" (asserted here) dict of possible flags.
     """
-    
-    true_argument_count = 0     
+
+    true_argument_count = 0
     for key in args:
-        if key == 'command': 
+        if key == 'command':
             break
-        if args[key]: 
+        if args[key]:
             true_argument_count+=1
 
-    if true_argument_count > MAX_ARGUMENT_COUNT: 
+    if true_argument_count > MAX_ARGUMENT_COUNT:
         raise UnexpectedArgumentCount(true_argument_count, MAX_ARGUMENT_COUNT)

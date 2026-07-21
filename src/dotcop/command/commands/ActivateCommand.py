@@ -4,18 +4,16 @@ from pathlib import Path
 from yaml import YAMLError
 
 from dotcop.utils.logging_setup import Logger
-from dotcop.config.ConfigHandler import load_dotcop_config
 from dotcop.config.ConfigHandler import load_dotcop_database
 from dotcop.config.ConfigHandler import update_dotcop_database_package
 from dotcop.core.Linker import Linker
-from dotcop.data.dal_configfile import ConfigFileDAL
+from dotcop.data.ConfigFileDAL import ConfigFileDAL
 from dotcop.command.exceptions.PackageAlreadyActive import PackageAlreadyActive
 
 logger = Logger.get_logger(__name__)
 
 class ActivateCommand:
     def run(self, args):
-        print(package_path)
         self.database_file = load_dotcop_database()
         for package in args.packages:
             file_paths = self._test_package(package)
