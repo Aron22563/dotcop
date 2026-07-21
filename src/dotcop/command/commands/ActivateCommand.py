@@ -8,12 +8,14 @@ from dotcop.config.ConfigHandler import load_dotcop_config
 from dotcop.config.ConfigHandler import load_dotcop_database
 from dotcop.config.ConfigHandler import update_dotcop_database_package
 from dotcop.core.Linker import Linker
+from dotcop.data.dal_configfile import ConfigFileDAL
+from dotcop.command.exceptions.PackageAlreadyActive import PackageAlreadyActive
 
 logger = Logger.get_logger(__name__)
 
 class ActivateCommand:
     def run(self, args):
-        self.configuration_file = load_dotcop_config()
+        print(package_path)
         self.database_file = load_dotcop_database()
         for package in args.packages:
             file_paths = self._test_package(package)
@@ -30,12 +32,12 @@ class ActivateCommand:
         package_name = package
         self.package_metadata = self.database_file['packages'].get(package_name)
         if self.package_metadata['status'] == 'active':
-            logger.error("Package is already active, exiting")
-            raise
+            logger.error("Package is already active: %s", package_name)
+            raise PackageAlreadyActive(package)
 
     def _test_package_setup(self, package):
         package_folder = Path(self.package_metadata['folder'])
-        self.package_path = Path(os.path.expandvars(self.configuration_file['package_path'])) / package_folder
+        self.package_path = Path(os.path.expandvars(ConfigFileDAL().get_package_path())) / package_folder
         if not self.package_path.is_dir():
             logger.error(f"Package was not found at expected path: {self.package_path}")
             raise FileNotFoundError()
