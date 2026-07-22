@@ -44,7 +44,7 @@ class ConfigFileDAL():
             return value
         self.logger.error("Value was not found in configuration file: {}", key)
         raise KeyError
-        
+
     def _expand_path_from_string(self, string_path) -> Path: 
         path = Path(os.path.expandvars(string_path))
         return path
