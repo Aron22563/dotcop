@@ -20,7 +20,7 @@ class ConfigFileDAL():
         package_path = self._expand_path_from_string(self._get_value_by_key('package_path'))
         return package_path
 
-    def get_package_path(self, package_name) -> Path: 
+    def get_package_path(self, package_name) -> Path:
         package_path = self.get_package_folder_path()
         appended_path = package_path / package_name
         return appended_path
@@ -32,7 +32,7 @@ class ConfigFileDAL():
     def get_meta_path(self) -> Path:
         meta_path = self._expand_path_from_string(self._get_value_by_key('dotcop_meta'))
         return meta_path
-    
+
     def _load_config_file(self):
         config_file = load_config_file()
         return config_file
@@ -45,6 +45,6 @@ class ConfigFileDAL():
         self.logger.error("Value was not found in configuration file: {}", key)
         raise KeyError
 
-    def _expand_path_from_string(self, string_path) -> Path: 
+    def _expand_path_from_string(self, string_path) -> Path:
         path = Path(os.path.expandvars(string_path))
         return path

@@ -32,10 +32,3 @@ def _load_dotcop_meta_directory():
     except Exception:
         raise
     return meta_directory
-
-def update_dotcop_database_package(package, package_metadata):
-    configuration_file = load_config_file()
-    try:
-        update_database_package(configuration_file, package, package_metadata)
-    except Exception:
-        raise

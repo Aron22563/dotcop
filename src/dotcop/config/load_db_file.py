@@ -1,4 +1,3 @@
-import os
 import yaml
 import shutil
 from pathlib import Path
