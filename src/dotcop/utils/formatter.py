@@ -1,7 +1,7 @@
 import semver
 from parse import parse
 from dotcop.utils.logging_setup import Logger
-
+from dotcop.utils.exceptions.PackageFormatInvalid import PackageFormatInvalid
 
 class Formatter:
     def __init__(self):
@@ -23,11 +23,11 @@ class Formatter:
             version = result["version"]
             if not self.check_version(version):
                 self.logger.error(f"Invalid version format found in package name found: {pkg}")
-                return False
+                raise PackageFormatInvalid("Invalid version format", pkg)
             return True
         # Parse pkgname without version string
         result = parse("@{user:w}/{name:w}", pkg)
         if result is None:
             self.logger.error(f"Invalid package name format found: {pkg}")
-            return False
+            raise PackageFormatInvalid("Invalid name format", pkg)
         return True
