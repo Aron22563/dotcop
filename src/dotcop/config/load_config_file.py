@@ -6,6 +6,7 @@ from yaml import YAMLError
 
 from dotcop.utils.logging_setup import Logger
 from dotcop.utils.root_finder import ROOT
+from dotcop.config.exceptions.InvalidEnvironmentVariable import InvalidEnvironmentVariable
 
 logger = Logger.get_logger(__name__)
 
@@ -21,6 +22,10 @@ def load_config_file():
 
 def _test_config_file():
     # Test if XDG_CONFIG_HOME environment variable exists, if not fail
+    expanded_variable = os.environ.get("XDG_CONFIG_HOME")
+    if expanded_variable is None: 
+        raise InvalidEnvironmentVariable("XDG_CONFIG_HOME")
+
     XDG_CONFIG_HOME = Path(os.environ.get("XDG_CONFIG_HOME"))
     if XDG_CONFIG_HOME is None or not XDG_CONFIG_HOME.is_dir():
         logger.error("XDG_CONFIG_HOME was not found or is incorrect: %s", XDG_CONFIG_HOME)
