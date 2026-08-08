@@ -1,5 +1,6 @@
 from dotcop.utils.logging_setup import Logger
 from dotcop.config.ConfigHandler import load_dotcop_database
+from dotcop.data.PackageDatabaseDAL import PackageDatabaseDAL
 
 class StatusCommand:
     def __init__(self):
@@ -32,8 +33,8 @@ class StatusCommand:
         return selected_packages
 
     def run(self, query):
-        database_file = load_dotcop_database()
+        all_packages = PackageDatabaseDAL().get_all_packages()
         self.logger.info("StatusCommand executing with: %s", query)
-        selected_packages = self._group_packages_by_query(database_file['packages'], query)
+        selected_packages = self._group_packages_by_query(all_packages, query)
         for package in sorted(selected_packages):
             print(package)
