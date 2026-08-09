@@ -1,5 +1,4 @@
 from dotcop.utils.logging_setup import Logger
-from dotcop.config.ConfigHandler import load_dotcop_database
 from dotcop.data.PackageDatabaseDAL import PackageDatabaseDAL
 
 class StatusCommand:

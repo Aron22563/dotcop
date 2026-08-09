@@ -7,6 +7,7 @@ from dotcop.utils.logging_setup import Logger
 from dotcop.config.ConfigHandler import load_dotcop_database
 from dotcop.core.Linker import Linker
 from dotcop.data.ConfigFileDAL import ConfigFileDAL
+from dotcop.data.PackageDatabaseDAL import PackageDatabaseDAL
 from dotcop.command.exceptions.PackageAlreadyActive import PackageAlreadyActive
 
 logger = Logger.get_logger(__name__)

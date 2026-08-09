@@ -23,7 +23,7 @@ def load_config_file():
 def _test_config_file():
     # Test if XDG_CONFIG_HOME environment variable exists, if not fail
     expanded_variable = os.environ.get("XDG_CONFIG_HOME")
-    if expanded_variable is None: 
+    if expanded_variable is None:
         raise InvalidEnvironmentVariable("XDG_CONFIG_HOME")
 
     XDG_CONFIG_HOME = Path(os.environ.get("XDG_CONFIG_HOME"))

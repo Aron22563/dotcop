@@ -2,7 +2,7 @@ import semver
 from parse import parse
 from dotcop.utils.logging_setup import Logger
 from dotcop.utils.exceptions.PackageFormatInvalid import PackageFormatInvalid
-
+from dotcop.utils.exceptions.PackageMetadataInvalid import PackageMetadataInvalid
 class Formatter:
     def __init__(self):
         self.logger = Logger.get_logger(__name__)
@@ -44,15 +44,15 @@ class Formatter:
             exception_message = "Missing \'folder\' key"
             self.logger.error(exception_message)
             raise PackageMetadataInvalid(package_name, package_metadata, exception_message)
-        try: 
+        try:
             package_metadata['source']
         except KeyError:
             exception_message = "Missing \'source\' key"
             self.logger.error(exception_message)
             raise PackageMetadataInvalid(package_name, package_metadata, exception_message)
         try:
-            package_metadata['status'] 
-        except KeyError: 
+            package_metadata['status']
+        except KeyError:
             exception_message = "Missing \'status\' key"
             self.logger.error(exception_message)
             raise PackageMetadataInvalid(package_name, package_metadata, exception_message)
