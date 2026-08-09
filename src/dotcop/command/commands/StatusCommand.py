@@ -33,7 +33,7 @@ class StatusCommand:
         return selected_packages
 
     def run(self, query):
-        all_packages = PackageDatabaseDAL().get_all_packages()
+        all_packages = PackageDatabaseDAL().get_packages_dict()
         self.logger.info("StatusCommand executing with: %s", query)
         selected_packages = self._group_packages_by_query(all_packages, query)
         for package in sorted(selected_packages):

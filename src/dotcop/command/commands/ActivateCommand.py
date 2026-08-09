@@ -86,5 +86,5 @@ class ActivateCommand:
 
     def _update_package_db(self, package):
         self.package_metadata['active'] = True
-        update_dotcop_database_package(package, self.package_metadata)
+        PackageDatabaseDAL().update_dotcop_database_package(package, self.package_metadata)
         logger.info(f"Package activated: {package}")
