@@ -13,9 +13,11 @@ class Formatter:
         else:
             return False
 
-    # Validate whether a given package string follows the format "@user/pkgname:version".
-    # The version specification is optional, it should default to latest.
     def check_pkgformat(self, pkg):
+        """
+        Validate whether a given package string follows the format "@user/pkgname:version".
+        The version specification is optional, it should default to latest.
+        """
         # Parse pkgname with version string
         result = parse("@{user}/{name}:{version}", pkg)
         if result is not None:
@@ -23,11 +25,35 @@ class Formatter:
             version = result["version"]
             if not self.check_version(version):
                 self.logger.error(f"Invalid version format found in package name found: {pkg}")
-                raise PackageFormatInvalid("Invalid version format", pkg)
+                raise PackageFormatInvalid(pkg, "Invalid version format")
             return True
         # Parse pkgname without version string
         result = parse("@{user:w}/{name:w}", pkg)
         if result is None:
             self.logger.error(f"Invalid package name format found: {pkg}")
-            raise PackageFormatInvalid("Invalid name format", pkg)
+            raise PackageFormatInvalid(pkg, "Invalid name format")
         return True
+
+    def check_package_metadata(self, package_name, package_metadata):
+        """
+        Validates whether all necessary keys exist, does not yet verify their values.
+        """
+        try:
+            package_metadata['folder']
+        except KeyError:
+            exception_message = "Missing \'folder\' key"
+            self.logger.error(exception_message)
+            raise PackageMetadataInvalid(package_name, package_metadata, exception_message)
+        try: 
+            package_metadata['source']
+        except KeyError:
+            exception_message = "Missing \'source\' key"
+            self.logger.error(exception_message)
+            raise PackageMetadataInvalid(package_name, package_metadata, exception_message)
+        try:
+            package_metadata['status'] 
+        except KeyError: 
+            exception_message = "Missing \'status\' key"
+            self.logger.error(exception_message)
+            raise PackageMetadataInvalid(package_name, package_metadata, exception_message)
+
