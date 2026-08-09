@@ -1,4 +1,4 @@
 class PackageFormatInvalid(Exception):
-    def __init__(self, message, package_name):
-        self.message = message
+    def __init__(sel, package_name, message):
         self.package_name = package_name
+        self.message = message
