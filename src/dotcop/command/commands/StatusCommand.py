@@ -5,35 +5,21 @@ class StatusCommand:
     def __init__(self):
         self.logger = Logger.get_logger(__name__)
 
-    def _group_packages_by_query(self, packages, query):
+    def _get_packages_by_query(self, query):
         selected_packages = set()
         match query:
             case 'all':
-                selected_packages = set(packages.keys())
+                selected_packages = set(PackageDatabaseDAL().get_packages_dict().keys())
             case 'active':
-                selected_packages = self._group_packages_by_status(packages, query)
+                selected_packages = set(PackageDatabaseDAL().get_packages_by_status(query).keys())
             case 'inactive':
-                selected_packages = self._group_packages_by_status(packages, query)
+                selected_packages = set(PackageDatabaseDAL().get_packages_by_status(query).keys())
             case 'default_query':
-                selected_packages = set(packages.keys())
-        return selected_packages
-
-    def _group_packages_by_status(self, packages, query):
-        """
-        Returns a filtered set of packages by their status
-
-        @param packages contains the dict of packages.
-        @param query contains the status to filter by.
-        """
-        selected_packages = set()
-        for name, metadata in packages.items():
-            if metadata['status'] == query:
-                selected_packages.add(name)
+                selected_packages = set(PackageDatabaseDAL().get_packages_dict().keys())
         return selected_packages
 
     def run(self, query):
-        all_packages = PackageDatabaseDAL().get_packages_dict()
         self.logger.info("StatusCommand executing with: %s", query)
-        selected_packages = self._group_packages_by_query(all_packages, query)
-        for package in sorted(selected_packages):
-            print(package)
+        selected_packages = self._get_packages_by_query(query)
+        for pkgname in sorted(selected_packages):
+            print(pkgname)

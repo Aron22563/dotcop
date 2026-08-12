@@ -6,6 +6,7 @@ from dotcop.utils.logging_setup import Logger
 from dotcop.utils.formatter import Formatter
 from dotcop.utils.exceptions.PackageFormatInvalid import PackageFormatInvalid
 from dotcop.utils.exceptions.PackageMetadataInvalid import PackageMetadataInvalid
+from dotcop.utils.exceptions.PackageStatusInvalid import PackageStatusInvalid
 from dotcop.data.exceptions.DatabaseKeyMissing import DatabaseKeyMissing
 from dotcop.data.exceptions.PackageNotFound import PackageNotFound
 
@@ -17,12 +18,24 @@ class PackageDatabaseDAL():
             all_packages = self._get_value_by_key('packages')
             return all_packages
 
+    def get_packages_by_status(self, status): 
+        all_packages = self.get_packages_dict()
+        selected_packages = dict()
+        for name, metadata in all_packages.items():
+            try: 
+                self._validate_package_metadata(metadata)
+            except PackageMetadataInvalid:
+                self.logger.error("Package status query failed because invalid metadata was found. This might be an unrelated malformed package")
+                raise
+            if metadata['status'] == status: 
+                selected_packages[name] = metadata
+        return selected_packages
+
     def get_package_metadata(self, package_name):
         """
         Retrieves a package, validates package_name, returns its associated metadata
         @Throws dotcop.data.exceptions.PackageNotFound
         @Throws dotcop.utils.exceptions.PackageFormatInvalid
-        @Throws dotcop.utils.exceptions.PackageMetadataInvalid
         """
         try:
             self._validate_package_name(package_name)
@@ -39,21 +52,28 @@ class PackageDatabaseDAL():
 
     def update_package_status(self, package_name, status):
         try:
-            package_metadata = self.get_package_metadata(package_name)
-            package_metadata['status'] = status
-            self._update_package_metadata(package_name, package_metadata)
-
-        except Exception:
-            self.logger.error("Package status update to: %s failed for package: %s", status, package_name)
+            self._validate_package_status(status)
+        except PackageStatusInvalid:
+            self.logger.error("Package status update failed because of invalid status")
             raise
+        try:
+            package_metadata = self.get_package_metadata(package_name)
+        except (PackageFormatInvalid, PackageNotFound):
+            self.logger.error("Package format invalid or not found")
+            raise
+
+        package_metadata['status'] = status
+        self._update_package_metadata(package_name, package_metadata)
 
     def _get_value_by_key(self, key):
         database_file = self._load_database_file()
-        value = database_file.get(key)
-        if value:
-            return value
-        self.logger.error("Value was not found in database file: {}", key)
-        raise KeyError
+        try:
+            value = database_file[key]
+        except KeyError:
+            exception_message = "Key was not found in database file"
+            self.logger.error(exception_message)
+            raise DatabaseKeyMissing(key, exception_message)
+        return value
 
     def _update_package_metadata(self, package_name, package_metadata):
         # Throws PackageFormatInvalid
@@ -104,10 +124,16 @@ class PackageDatabaseDAL():
         except PackageFormatInvalid:
             raise
 
-    def _validate_package_metadata(package_name, package_metadata):
+    def _validate_package_metadata(self, package_metadata):
         try:
             Formatter().check_package_metadata(package_metadata)
         except PackageMetadataInvalid:
+            raise
+
+    def _validate_package_status(self, package_status): 
+        try: 
+            Formatter().check_package_status(package_status)
+        except PackageStatusInvalid: 
             raise
 
 
