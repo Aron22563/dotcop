@@ -3,6 +3,8 @@ from parse import parse
 from dotcop.utils.logging_setup import Logger
 from dotcop.utils.exceptions.PackageFormatInvalid import PackageFormatInvalid
 from dotcop.utils.exceptions.PackageMetadataInvalid import PackageMetadataInvalid
+from dotcop.utils.exceptions.PackageStatusInvalid import PackageStatusInvalid
+
 class Formatter:
     def __init__(self):
         self.logger = Logger.get_logger(__name__)
@@ -34,7 +36,7 @@ class Formatter:
             raise PackageFormatInvalid(pkg, "Invalid name format")
         return True
 
-    def check_package_metadata(self, package_name, package_metadata):
+    def check_package_metadata(self, package_metadata):
         """
         Validates whether all necessary keys exist, does not yet verify their values.
         """
@@ -43,17 +45,23 @@ class Formatter:
         except KeyError:
             exception_message = "Missing \'folder\' key"
             self.logger.error(exception_message)
-            raise PackageMetadataInvalid(package_name, package_metadata, exception_message)
+            raise PackageMetadataInvalid(package_metadata, exception_message)
         try:
             package_metadata['source']
         except KeyError:
             exception_message = "Missing \'source\' key"
             self.logger.error(exception_message)
-            raise PackageMetadataInvalid(package_name, package_metadata, exception_message)
+            raise PackageMetadataInvalid(package_metadata, exception_message)
         try:
             package_metadata['status']
         except KeyError:
             exception_message = "Missing \'status\' key"
             self.logger.error(exception_message)
-            raise PackageMetadataInvalid(package_name, package_metadata, exception_message)
+            raise PackageMetadataInvalid(package_metadata, exception_message)
+
+    def check_package_status(self, package_status):
+        if package_status not in ['default_query', 'active', 'inactive', 'all']: 
+            exception_message = "Invalid package status was found"
+            self.logger.error(exception_message)
+            raise PackageStatusInvalid(package_status, exception_message)
 
