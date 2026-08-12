@@ -60,7 +60,7 @@ class Formatter:
             raise PackageMetadataInvalid(package_metadata, exception_message)
 
     def check_package_status(self, package_status):
-        if package_status not in ['default_query', 'active', 'inactive', 'all']: 
+        if package_status not in ['default_query', 'active', 'inactive', 'all']:
             exception_message = "Invalid package status was found"
             self.logger.error(exception_message)
             raise PackageStatusInvalid(package_status, exception_message)

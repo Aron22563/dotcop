@@ -18,16 +18,16 @@ class PackageDatabaseDAL():
             all_packages = self._get_value_by_key('packages')
             return all_packages
 
-    def get_packages_by_status(self, status): 
+    def get_packages_by_status(self, status):
         all_packages = self.get_packages_dict()
-        selected_packages = dict()
+        selected_packages = {}
         for name, metadata in all_packages.items():
-            try: 
+            try:
                 self._validate_package_metadata(metadata)
             except PackageMetadataInvalid:
                 self.logger.error("Package status query failed because invalid metadata was found. This might be an unrelated malformed package")
                 raise
-            if metadata['status'] == status: 
+            if metadata['status'] == status:
                 selected_packages[name] = metadata
         return selected_packages
 
@@ -130,10 +130,10 @@ class PackageDatabaseDAL():
         except PackageMetadataInvalid:
             raise
 
-    def _validate_package_status(self, package_status): 
-        try: 
+    def _validate_package_status(self, package_status):
+        try:
             Formatter().check_package_status(package_status)
-        except PackageStatusInvalid: 
+        except PackageStatusInvalid:
             raise
 
 
