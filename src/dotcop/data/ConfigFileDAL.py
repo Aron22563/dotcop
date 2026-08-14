@@ -1,8 +1,9 @@
 import os
 from pathlib import Path
 
-from dotcop.config.ConfigHandler import load_config_file
 from dotcop.utils.logging_setup import Logger
+from dotcop.config.ConfigHandler import load_config_file
+from dotcop.data.exceptions.ConfigKeyMissing import ConfigKeyMissing
 
 class ConfigFileDAL():
     def __init__(self):
@@ -16,14 +17,9 @@ class ConfigFileDAL():
         log_path = self._expand_path_from_string(self._get_value_by_key('log_path'))
         return log_path
 
-    def get_package_folder_path(self) -> Path:
+    def get_package_path(self) -> Path:
         package_path = self._expand_path_from_string(self._get_value_by_key('package_path'))
         return package_path
-
-    def get_package_path(self, package_name) -> Path:
-        package_path = self.get_package_folder_path()
-        appended_path = package_path / package_name
-        return appended_path
 
     def get_database_path(self) -> Path:
         database_path = self._expand_path_from_string(self._get_value_by_key('dotcop_database'))
@@ -39,11 +35,13 @@ class ConfigFileDAL():
 
     def _get_value_by_key(self, key):
         config_file = self._load_config_file()
-        value = config_file.get(key)
-        if value:
-            return value
-        self.logger.error("Value was not found in configuration file: {}", key)
-        raise KeyError
+        try: 
+            value = config_file[key]
+        except KeyError: 
+            exception_message = "Key was not found in configuration file"
+            self.logger.error(exception_message)
+            raise ConfigKeyMissing(key, exception_message)
+        return value
 
     def _expand_path_from_string(self, string_path) -> Path:
         path = Path(os.path.expandvars(string_path))
