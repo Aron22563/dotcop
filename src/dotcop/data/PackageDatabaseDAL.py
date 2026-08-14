@@ -46,9 +46,43 @@ class PackageDatabaseDAL():
         try:
             package_metadata = all_packages[package_name]
         except KeyError:
-            self.logger.error("Package not found: %s", package_name)
+            self.logger.error("Package metadata retrieval failed because the package was not found")
             raise PackageNotFound(package_name)
-        return  package_metadata
+        try: 
+            self._validate_package_metadata(package_metadata)
+        except PackageMetadataInvalid:
+            self.logger.error("Package metadata retrieval failed because of invalid metadata")
+            raise
+        return package_metadata
+
+    def get_package_status(self, package_name): 
+        try: 
+            package_metadata = self.get_package_metadata(package_name)
+        except PackageFormatInvalid:
+            self.logger.error("Package status retrieval failed because the package name was invalid")
+            raise
+        except PackageNotFound: 
+            self.logger.error("Package status retrieval failed because the package was not found")
+            raise
+        except PackageMetadataInvalid: 
+            self.logger.error("Package status retrieval failed because the package metadata was invalid")
+            raise
+        return package_metadata['status']
+
+    def get_package_folder(self, package_name):
+        try: 
+            package_metadata = self.get_package_metadata(package_name)
+        except PackageFormatInvalid:
+            self.logger.error("Package folder retrieval failed because the package name was invalid")
+            raise
+        except PackageNotFound: 
+            self.logger.error("Package folder retrieval failed because the package was not found")
+            raise
+        except PackageMetadataInvalid: 
+            self.logger.error("Package folder retrieval failed because the package metadata was invalid")
+            raise
+        return package_metadata['folder']
+        
 
     def update_package_status(self, package_name, status):
         try:
