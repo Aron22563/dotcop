@@ -144,11 +144,8 @@ class PackageDatabaseDAL():
             self.logger.error("Database package update failed for: %s", package_name)
             raise
 
-    def _load_database_path(self):
-            return ConfigFileDAL().get_database_path()
-
     def _load_database_file(self):
-        database_path = self._load_database_path()
+        database_path = ConfigFileDAL().get_database_path()
         database_file = load_database_file(database_path)
         return database_file
 
