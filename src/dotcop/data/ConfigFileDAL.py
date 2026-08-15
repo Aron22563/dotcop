@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from dotcop.utils.logging_setup import Logger
+from dotcop.utils.expand_path import expand_path_from_string
 from dotcop.config.ConfigHandler import load_config_file
 from dotcop.data.exceptions.ConfigKeyMissing import ConfigKeyMissing
 
@@ -14,19 +15,19 @@ class ConfigFileDAL():
         return name_field
 
     def get_log_path(self) -> str:
-        log_path = self._expand_path_from_string(self._get_value_by_key('log_path'))
+        log_path = expand_path_from_string(self._get_value_by_key('log_path'))
         return log_path
 
     def get_package_path(self) -> Path:
-        package_path = self._expand_path_from_string(self._get_value_by_key('package_path'))
+        package_path = expand_path_from_string(self._get_value_by_key('package_path'))
         return package_path
 
     def get_database_path(self) -> Path:
-        database_path = self._expand_path_from_string(self._get_value_by_key('dotcop_database'))
+        database_path = expand_path_from_string(self._get_value_by_key('dotcop_database'))
         return database_path
 
     def get_meta_path(self) -> Path:
-        meta_path = self._expand_path_from_string(self._get_value_by_key('dotcop_meta'))
+        meta_path = expand_path_from_string(self._get_value_by_key('dotcop_meta'))
         return meta_path
 
     def _load_config_file(self):
@@ -42,7 +43,3 @@ class ConfigFileDAL():
             self.logger.error(exception_message)
             raise ConfigKeyMissing(key, exception_message)
         return value
-
-    def _expand_path_from_string(self, string_path) -> Path:
-        path = Path(os.path.expandvars(string_path))
-        return path
