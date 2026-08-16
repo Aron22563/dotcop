@@ -24,7 +24,7 @@ class PackageDatabaseDAL():
         for name, metadata in all_packages.items():
             try:
                 self._validate_package_metadata(metadata)
-            except PackageMetadataInvalid:
+            except PackageDBMetadataInvalid:
                 self.logger.error("Package status query failed because invalid metadata was found. This might be an unrelated malformed package")
                 raise
             if metadata['status'] == status:
@@ -48,41 +48,41 @@ class PackageDatabaseDAL():
         except KeyError:
             self.logger.error("Package metadata retrieval failed because the package was not found")
             raise PackageNotFound(package_name)
-        try: 
+        try:
             self._validate_package_metadata(package_metadata)
-        except PackageMetadataInvalid:
+        except PackageDBMetadataInvalid:
             self.logger.error("Package metadata retrieval failed because of invalid metadata")
             raise
         return package_metadata
 
-    def get_package_status(self, package_name): 
-        try: 
+    def get_package_status(self, package_name):
+        try:
             package_metadata = self.get_package_metadata(package_name)
         except PackageFormatInvalid:
             self.logger.error("Package status retrieval failed because the package name was invalid")
             raise
-        except PackageNotFound: 
+        except PackageNotFound:
             self.logger.error("Package status retrieval failed because the package was not found")
             raise
-        except PackageMetadataInvalid: 
+        except PackageDBMetadataInvalid:
             self.logger.error("Package status retrieval failed because the package metadata was invalid")
             raise
         return package_metadata['status']
 
     def get_package_folder(self, package_name):
-        try: 
+        try:
             package_metadata = self.get_package_metadata(package_name)
         except PackageFormatInvalid:
             self.logger.error("Package folder retrieval failed because the package name was invalid")
             raise
-        except PackageNotFound: 
+        except PackageNotFound:
             self.logger.error("Package folder retrieval failed because the package was not found")
             raise
-        except PackageMetadataInvalid: 
+        except PackageDBMetadataInvalid:
             self.logger.error("Package folder retrieval failed because the package metadata was invalid")
             raise
         return package_metadata['folder']
-        
+
 
     def update_package_status(self, package_name, status):
         try:
@@ -119,7 +119,7 @@ class PackageDatabaseDAL():
         # Throws PackageMetadataInvalid
         try:
             self._validate_package_metadata(package_metadata)
-        except PackageMetadataInvalid:
+        except PackageDBMetadataInvalid:
             self.logger.error("Package metadata update failed because of invalid metadata format")
             raise
 

@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from dotcop.utils.logging_setup import Logger
@@ -36,9 +35,9 @@ class ConfigFileDAL():
 
     def _get_value_by_key(self, key):
         config_file = self._load_config_file()
-        try: 
+        try:
             value = config_file[key]
-        except KeyError: 
+        except KeyError:
             exception_message = "Key was not found in configuration file"
             self.logger.error(exception_message)
             raise ConfigKeyMissing(key, exception_message)

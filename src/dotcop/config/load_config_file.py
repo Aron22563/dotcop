@@ -1,12 +1,12 @@
 import os
 import yaml
 import shutil
-from pathlib import Path
 from yaml import YAMLError
 
 from dotcop.utils.logging_setup import Logger
 from dotcop.utils.root_finder import ROOT
 from dotcop.utils.expand_path import expand_path_from_string
+from dotcop.utils.exceptions.PathExpansionFailure import PathExpansionFailure
 
 logger = Logger.get_logger(__name__)
 

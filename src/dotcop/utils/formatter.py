@@ -65,25 +65,25 @@ class Formatter:
             exception_message = "Invalid package status was found"
             self.logger.error(exception_message)
             raise PackageStatusInvalid(package_status, exception_message)
-    
-    def check_identifying_triplet(self, ident_triplet): 
+
+    def check_identifying_triplet(self, ident_triplet):
         if ident_triplet is None:
             self.logger.error("Identifying triplet missing for a package.")
             raise PackageIdentTripletInvalid(ident_triplet, "Identifying triplet missing.")
         try:
             ident_triplet['name']
-        except KeyError: 
+        except KeyError:
             self.logger.error("Missing \'name\' key in %s", ident_triplet)
             raise PackageIdentTripletInvalid(ident_triplet, "Missing \'name\' key")
         try:
             ident_triplet['user']
-        except KeyError: 
+        except KeyError:
             self.logger.error("Missing \'user\' key in %s", ident_triplet)
             raise PackageIdentTripletInvalid(ident_triplet, "Missing \'user\' key")
         try:
             ident_triplet['version']
-        except KeyError: 
+        except KeyError:
             self.logger.error("Missing \'version\' key in %s", ident_triplet)
             raise PackageIdentTripletInvalid(ident_triplet, "Missing \'version\' key")
-        
+
 
