@@ -5,7 +5,7 @@ from dotcop.data.ConfigFileDAL import ConfigFileDAL
 from dotcop.utils.logging_setup import Logger
 from dotcop.utils.formatter import Formatter
 from dotcop.utils.exceptions.PackageFormatInvalid import PackageFormatInvalid
-from dotcop.utils.exceptions.PackageMetadataInvalid import PackageMetadataInvalid
+from dotcop.utils.exceptions.PackageDBMetadataInvalid import PackageDBMetadataInvalid
 from dotcop.utils.exceptions.PackageStatusInvalid import PackageStatusInvalid
 from dotcop.data.exceptions.DatabaseKeyMissing import DatabaseKeyMissing
 from dotcop.data.exceptions.PackageNotFound import PackageNotFound
@@ -157,8 +157,8 @@ class PackageDatabaseDAL():
 
     def _validate_package_metadata(self, package_metadata):
         try:
-            Formatter().check_package_metadata(package_metadata)
-        except PackageMetadataInvalid:
+            Formatter().check_package_db_metadata(package_metadata)
+        except PackageDBMetadataInvalid:
             raise
 
     def _validate_package_status(self, package_status):
