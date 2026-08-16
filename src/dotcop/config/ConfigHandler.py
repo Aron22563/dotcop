@@ -1,7 +1,7 @@
 from dotcop.config.load_config_file import load_config_file
 from dotcop.config.load_db_file import load_database_file
 from dotcop.config.load_manifest_dir import load_manifest_dir
-from dotcop.config.load_meta_dir import _load_meta_dir
+from dotcop.config.load_meta_dir import load_meta_dir
 
 def load_dotcop_config():
     try:
@@ -17,18 +17,17 @@ def load_dotcop_database(database_path):
         raise
     return database_file
 
-def load_dotcop_manifest_directory():
-    meta_directory = _load_dotcop_meta_directory()
+def load_dotcop_manifest_directory(meta_path):
+    meta_directory = _load_dotcop_meta_directory(meta_path)
     try:
         manifest_directory = load_manifest_dir(meta_directory)
-    except Exception:
+    except FileExistsError:
         raise
     return manifest_directory
 
-def _load_dotcop_meta_directory():
-    configuration_file = load_config_file()
+def _load_dotcop_meta_directory(meta_path):
     try:
-        meta_directory = _load_meta_dir(configuration_file)
-    except Exception:
+        meta_directory = load_meta_dir(meta_path)
+    except FileExistsError:
         raise
     return meta_directory
