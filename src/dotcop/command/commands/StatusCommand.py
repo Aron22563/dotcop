@@ -1,23 +1,25 @@
 from dotcop.utils.logging_setup import Logger
-from dotcop.config.ConfigHandler import load_dotcop_database
+from dotcop.data.PackageDatabaseDAL import PackageDatabaseDAL
 
 class StatusCommand:
     def __init__(self):
         self.logger = Logger.get_logger(__name__)
 
-    def _group_packages_by_query(self, packages, query):
+    def _get_packages_by_query(self, query):
         selected_packages = set()
-        if query == 'all':
-            selected_packages = set(packages.keys())
-        else:
-            for name, metadata in packages.items():
-                if metadata['status'] == query:
-                    selected_packages.add(name)
+        match query:
+            case 'all':
+                selected_packages = set(PackageDatabaseDAL().get_packages_dict().keys())
+            case 'active':
+                selected_packages = set(PackageDatabaseDAL().get_packages_by_status(query).keys())
+            case 'inactive':
+                selected_packages = set(PackageDatabaseDAL().get_packages_by_status(query).keys())
+            case 'default_query':
+                selected_packages = set(PackageDatabaseDAL().get_packages_dict().keys())
         return selected_packages
 
     def run(self, query):
-        database_file = load_dotcop_database()
-        self.logger.debug("StatusCommand executed with: %s", query)
-        selected_packages = self._group_packages_by_query(database_file['packages'], query)
-        for package in sorted(selected_packages):
-            print(package)
+        self.logger.info("StatusCommand executing with: %s", query)
+        selected_packages = self._get_packages_by_query(query)
+        for pkgname in sorted(selected_packages):
+            print(pkgname)

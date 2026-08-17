@@ -3,24 +3,26 @@ import hashlib
 import yaml
 import os
 from dotcop.config.ConfigHandler import load_dotcop_manifest_directory
+from dotcop.data.ConfigFileDAL import ConfigFileDAL
 from dotcop.utils.logging_setup import Logger
 
 logger = Logger.get_logger(__name__)
 
 class Linker:
-    def __init__(self, package_folder):
+    def __init__(self, package_name):
         self.manifest_file_path = None
         self.manifest_data = {}
-        self._init_manifest_file(package_folder)
+        self._init_manifest_file(package_name)
 
     def link(self, src_path, dst_path):
         self._write_to_manifest(src_path, dst_path)
         self._write_symlink(src_path, dst_path)
 
-    def _init_manifest_file(self, package_folder):
+    def _init_manifest_file(self, package_name):
         self.time_stamp = datetime.datetime.now().replace(microsecond=0).isoformat()
-        manifest_directory = load_dotcop_manifest_directory()
-        package_manifest_path = manifest_directory / package_folder
+        meta_path = ConfigFileDAL().get_meta_path()
+        manifest_directory = load_dotcop_manifest_directory(meta_path)
+        package_manifest_path = manifest_directory / package_name
         package_manifest_path.mkdir(parents=True, exist_ok=True)
 
         manifest_file_name = f"manifest-{self.time_stamp}.yaml"
