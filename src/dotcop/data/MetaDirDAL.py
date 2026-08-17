@@ -36,8 +36,8 @@ class MetaDirDAL():
         except FileNotFoundError:
             self.logger.error("Package files list retrieval failed because of a missing file or directory")
             raise
-        except LinkDestinationExists:
-            self.logger.error("Package files list retrieval failed because of an existing file that would cause an overwrite")
+        except LinkDestinationExists as e:
+            self.logger.error("Package files list retrieval failed because of an existing file that would cause an overwrite: %s", e.dst_path)
             raise
         except LinkSourceNotFound:
             self.logger.error("Package files list retrieval failed because of a missing source file")
@@ -52,7 +52,7 @@ class MetaDirDAL():
     def _adapt_package_files(self, package_name, package_metadata):
         meta_path = self.get_package_meta_path(package_name)
         files_dict = package_metadata['files']
-        paths = []
+        paths = {}
         for pair in files_dict:
             src = expand_path_from_string(pair["from"])
             dst = expand_path_from_string(pair["to"])
@@ -65,7 +65,7 @@ class MetaDirDAL():
                 self.logger.error("Existing file at link destination: %s", dst_path)
                 raise LinkDestinationExists(dst_path, "Existing file at link destination")
             self.logger.info("Validated paths: %s -> %s", src_path, dst_path)
-            paths.append((src, dst))
+            paths[src_path] = dst
         return paths
 
 
@@ -134,7 +134,6 @@ class MetaDirDAL():
             raise
 
     def _validate_files_dict(self, meta_path, files_dict):
-        self.logger.warn("Files section validation")
         for pair in files_dict:
             src = expand_path_from_string(pair["from"])
             dst = expand_path_from_string(pair["to"])

@@ -136,7 +136,7 @@ class PackageDatabaseDAL():
             self.logger.error("Package not found: %s", package_name)
             raise PackageNotFound(package_name)
         database_file["packages"][package_name] = package_metadata
-        database_path = self._load_database_path()
+        database_path = self.get_database_path()
         try:
             with open(database_path, "w") as f:
                 yaml.safe_dump(database_file, f, sort_keys=False)
@@ -144,8 +144,11 @@ class PackageDatabaseDAL():
             self.logger.error("Database package update failed for: %s", package_name)
             raise
 
+    def get_database_path(self): 
+        return ConfigFileDAL().get_database_path()
+
     def _load_database_file(self):
-        database_path = ConfigFileDAL().get_database_path()
+        database_path = self.get_database_path()
         database_file = load_database_file(database_path)
         return database_file
 
