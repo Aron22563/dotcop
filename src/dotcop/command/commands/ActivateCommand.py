@@ -5,7 +5,7 @@ from dotcop.data.PackageDatabaseDAL import PackageDatabaseDAL
 from dotcop.data.MetaDirDAL import MetaDirDAL
 from dotcop.data.exceptions.PackageNotFound import PackageNotFound
 from dotcop.data.exceptions.LinkDestinationExists import LinkDestinationExists
-from dotcop.data.exceptions.SourceFileNotFound import SourceFileNotFound
+from dotcop.data.exceptions.LinkSourceNotFound import LinkSourceNotFound
 from dotcop.utils.exceptions.PackageFormatInvalid import PackageFormatInvalid
 from dotcop.utils.exceptions.PackageDBMetadataInvalid import PackageDBMetadataInvalid
 from dotcop.command.exceptions.PackageAlreadyActive import PackageAlreadyActive
@@ -43,7 +43,7 @@ class ActivateCommand:
         except LinkDestinationExists as e:
             self.logger.error("Package activation failed because the destination files of a pair in the files list already exists: %s", e.dst_path)
             raise
-        except SourceFileNotFound as e:
+        except LinkSourceNotFound as e:
             self.logger.error("Package activation failed because the source file of a pair in the files list was not found: %s", e.src_path)
             raise
         self._link_files(file_paths, package_name)
