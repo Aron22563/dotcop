@@ -1,3 +1,4 @@
+[![Upload Python Package to TestPyPI](https://github.com/Aron22563/dotcop/actions/workflows/python-publish-testpypi.yml/badge.svg)](https://github.com/Aron22563/dotcop/actions/workflows/python-publish-testpypi.yml)
 # Dotcop
 Dotcop is a configuration package manager designed to simplify managing, syncing,
 and versioning configuration files across systems.
