@@ -2,3 +2,4 @@
 'log_path': '$XDG_CACHE_HOME/dotcop'
 'package_path': '$XDG_DATA_HOME/dotcop/packages'
 'dotcop_database': '$XDG_STATE_HOME/dotcop/package_db.yaml'
+'dotcop_meta': '$XDG_STATE_HOME/dotcop/.meta/'

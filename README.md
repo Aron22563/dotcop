@@ -1,3 +1,4 @@
+[![Upload Python Package to TestPyPI](https://github.com/Aron22563/dotcop/actions/workflows/python-publish-testpypi.yml/badge.svg)](https://github.com/Aron22563/dotcop/actions/workflows/python-publish-testpypi.yml)
 # Dotcop
 Dotcop is a configuration package manager designed to simplify managing, syncing,
 and versioning configuration files across systems.
@@ -13,19 +14,19 @@ Our Wiki tries to follow the [Diataxis](https://diataxis.fr/) Style. Due to regu
 ## [Issues](https://github.com/Aron22563/Dotcop/issues)
 Our Project currently offers templates for Feature Requests and Bug Reports which may be used for improving the Project.
 
-## Downloading the Application
+## Downloading the application
 > This project is still in a pre-release state. Even "stable" releases from testpypi are still considered incomplete and unstable. Install and use with caution.
 
 1. **Dependencies:**
    - `pip`
    - `pipx`
 
-1. Download latest Stable version from testpypi
+1. Download latest stable version from testpypi
    ```bash
    pipx install --index-url https://test.pypi.org/simple/ --pip-args="--extra-index-url https://pypi.org/simple/" dotcop
    ```
    
-1. Download the latest Pre-Release version from testpypi
+1. Download the latest pre-release version from testpypi
    ```bash
    pipx install --index-url https://test.pypi.org/simple/ --pip-args="--extra-index-url https://pypi.org/simple/ --pre" dotcop
    ```

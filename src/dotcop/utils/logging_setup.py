@@ -10,9 +10,9 @@ class Logger:
 
         if logger.handlers:
             return logger
-        # if logger 'name' does not already exist, create it and attach handlers
+        # If logger 'name' does not already exist, create it and attach handlers
         else:
-            # set logLevel to loglevel or to INFO if requested level is incorrect
+            # Set logLevel to loglevel or to INFO if requested level is incorrect
             loglevel = getattr(logging, loglevel.upper(), logging.INFO)
             logger.setLevel(loglevel)
             fmt = "%(asctime)s %(filename)-18s %(levelname)s: %(message)s"

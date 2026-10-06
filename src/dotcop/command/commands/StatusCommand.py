@@ -1,29 +1,25 @@
-import os
-import yaml
-from pathlib import Path
-from yaml import YAMLError
-
 from dotcop.utils.logging_setup import Logger
-from dotcop.config.ConfigHandler import load_dotcop_database
+from dotcop.data.PackageDatabaseDAL import PackageDatabaseDAL
 
 class StatusCommand:
     def __init__(self):
-        self.logger = Logger.get_logger(__name__) 
-    
-    def _group_packages(self, packages):
-        active_packages = set()
-        inactive_packages = set() 
+        self.logger = Logger.get_logger(__name__)
 
-        for name, metadata in packages.items(): 
-            if metadata['active']: 
-                active_packages.add(name)
-            else: 
-                inactive_packages.add(name)
-        return active_packages, inactive_packages
+    def _get_packages_by_query(self, query):
+        selected_packages = set()
+        match query:
+            case 'all':
+                selected_packages = set(PackageDatabaseDAL().get_packages_dict().keys())
+            case 'active':
+                selected_packages = set(PackageDatabaseDAL().get_packages_by_status(query).keys())
+            case 'inactive':
+                selected_packages = set(PackageDatabaseDAL().get_packages_by_status(query).keys())
+            case 'default_query':
+                selected_packages = set(PackageDatabaseDAL().get_packages_dict().keys())
+        return selected_packages
 
-    def run(self, args):
-        database_file = load_dotcop_database()
-        active_packages, inactive_packages = self._group_packages(database_file['packages'])
-        for package in active_packages: 
-            print(package)
-        self.logger.info("Database file was loaded by StatusCommand")
+    def run(self, query):
+        self.logger.info("StatusCommand executing with: %s", query)
+        selected_packages = self._get_packages_by_query(query)
+        for pkgname in sorted(selected_packages):
+            print(pkgname)
